@@ -2,7 +2,6 @@ C:\Repos\Euler\Euler\Euler\bin\Debug\net6.0\Euler.exe
 C:\Repos\Euler\Euler\Euler\bin\Debug\net6.0\Euler.deps.json
 C:\Repos\Euler\Euler\Euler\bin\Debug\net6.0\Euler.runtimeconfig.json
 C:\Repos\Euler\Euler\Euler\bin\Debug\net6.0\Euler.dll
-C:\Repos\Euler\Euler\Euler\bin\Debug\net6.0\ref\Euler.dll
 C:\Repos\Euler\Euler\Euler\bin\Debug\net6.0\Euler.pdb
 C:\Repos\Euler\Euler\Euler\obj\Debug\net6.0\Euler.csproj.AssemblyReference.cache
 C:\Repos\Euler\Euler\Euler\obj\Debug\net6.0\Euler.GeneratedMSBuildEditorConfig.editorconfig
@@ -13,3 +12,4 @@ C:\Repos\Euler\Euler\Euler\obj\Debug\net6.0\Euler.dll
 C:\Repos\Euler\Euler\Euler\obj\Debug\net6.0\ref\Euler.dll
 C:\Repos\Euler\Euler\Euler\obj\Debug\net6.0\Euler.pdb
 C:\Repos\Euler\Euler\Euler\obj\Debug\net6.0\Euler.genruntimeconfig.cache
+C:\Repos\Euler\Euler\Euler\obj\Debug\net6.0\refint\Euler.dll
