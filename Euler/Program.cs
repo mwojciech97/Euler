@@ -8,3 +8,7 @@
 //Console.WriteLine(Problem7(10001));
 //Console.WriteLine(Problem8(13));
 //Console.WriteLine(Problem9(1000));
+//Console.WriteLine(Problem10(2000000));
+//Console.WriteLine(Problem11(4));
+//Console.WriteLine(Problem12(500));
+//Console.WriteLine(Problem13(10));

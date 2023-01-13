@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Numerics;
 
 namespace Euler
 {
@@ -145,8 +148,6 @@ namespace Euler
         }
         public static string Problem9(int sum)
         {
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
             int a = 0, b = 0, c = 0, val;
             for (int i = 1; i < sum/2; i++)
             {
@@ -163,9 +164,127 @@ namespace Euler
                 if (a == i) break;
             }
             val = a * b * c;
-            watch.Stop();
-            Console.WriteLine($"Time: {watch.ElapsedTicks} ticks");
             return $"A: {a}, B: {b}, C: {c}, val: {val}";
+        }
+        public static long Problem10(int number)
+        {
+            List<int> primes = new List<int>();
+            long sum = 0;
+            int check;
+            primes.Add(2);
+            primes.Add(3);
+            for (int i = 5; i < number; i+=2)
+            {
+                check = 0;
+                for (int j = 0; j < primes.Count(); j++)
+                {
+                    if (i % primes[j] == 0)
+                    {
+                        check++;
+                        break;
+                    }
+                    
+                }
+                if(check == 0) primes.Add(i);
+            }
+            primes.ForEach(prime => sum += prime);
+            return sum;
+        }
+        public static int Problem11(int number)
+        {
+            string grid = File.ReadAllText("D:\\Nauka\\20x20gridProblem11.txt");
+            string[] grids = grid.Split(' ');
+            int[] numbers = grids.Select(x => Int32.Parse(x)).ToArray();
+            int left = 1, down = 1, diagonalDown = 1, diagonalUp = 1;
+            CountRight();
+            CountDown();
+            CountDiagonalDown();
+            CountDiagonalUp();
+            int[] max = new int[] { left, down, diagonalDown, diagonalUp };
+            return max.Max();
+            void CountRight()
+            {
+                int first = 0, tempR;
+                for (int i = 0; i < numbers.Count() - number + 1; i++)
+                {
+                    if (i < number) left *= numbers[i];
+                    if (i % 20 == 0)
+                    {
+                        i += 3;
+                        tempR = numbers[i] * numbers[i - 1] * numbers[i - 2] * numbers[i - 3];
+                        if (tempR > left) left = tempR;
+                        first += 4;
+                        continue;
+                    }
+                    if(numbers[first] == 0)
+                    {
+                        first++;
+                        continue;
+                    }
+                    tempR = left / numbers[first] * numbers[i];
+                    if (tempR > left) left = tempR;
+                    first++;
+                }
+            }
+            void CountDown()
+            {
+                int tempD;
+                for (int i = 0; i < numbers.Count() - 60; i++)
+                {
+                    tempD = numbers[i] * numbers[i + 20] * numbers[i + 40] * numbers[i + 60];
+                    if(tempD > down) down = tempD;
+                }
+            }
+            void CountDiagonalDown()
+            {
+                int tempDD;
+                for (int i = 0; i < numbers.Count() - 63; i++)
+                {
+                    if (i % 17 == 0) i+=3;
+                    tempDD = numbers[i] * numbers[i + 21] * numbers[i + 42] * numbers[i + 63];
+                    if(tempDD > diagonalDown) diagonalDown = tempDD;
+                }
+            }
+            void CountDiagonalUp()
+            {
+                int tempDU;
+                for (int i = 3; i < numbers.Count() - 60; i++)
+                {
+                    if (i % 20 == 0) i += 3;
+                    tempDU = numbers[i] * numbers[i + 19] * numbers[i + 38] * numbers[i + 57];
+                    if(tempDU > diagonalUp) diagonalUp = tempDU;
+                }
+            }
+            
+        }
+        public static int Problem12(int numberOfDividers)
+        {
+            int dividersCount, number = 0, count = 0;
+            do
+            {
+                dividersCount = 2;
+                count++;
+                number += count;
+                for (int i = 2; i < number / 2 + 1; i++)
+                {
+                    if (number % i == 0) dividersCount++;
+                }
+            } while (dividersCount <= numberOfDividers);
+            return number;
+        }
+        public static string Problem13(int digits)
+        {
+            BigInteger sum = 0;
+            string[] text = File.ReadAllLines("D:\\Nauka\\Problem13.txt");
+            BigInteger[] numbers = text.Select(t => BigInteger.Parse(t)).ToArray();
+            foreach (BigInteger num in numbers)
+            {
+                sum += num;
+            }
+            char[] charNumbers = sum.ToString().ToCharArray();
+            char[] first = charNumbers.Take(digits).ToArray();
+            string firstDigits = new string(first);
+            return $"Sum of those values is {sum}. First {digits} digits are {firstDigits}";
         }
     }
 }
