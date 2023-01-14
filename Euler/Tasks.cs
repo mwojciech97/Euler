@@ -286,5 +286,51 @@ namespace Euler
             string firstDigits = new string(first);
             return $"Sum of those values is {sum}. First {digits} digits are {firstDigits}";
         }
+        public static string Problem14(int max)
+        {
+            int longestChain = 0, chain, number = 0;
+            for (int i = 2; i < max; i++)
+            {
+                chain = 1;
+                longestChain = Counting(i);
+                if (longestChain == chain) number = i;
+            }
+            return $"The longest chain is {longestChain} for number {number}";
+            int Counting(long val)
+            {
+                if (val == 1)
+                {
+                    if (chain > longestChain) return chain;
+                    return longestChain;
+                }
+                else if (val % 2 == 0)
+                {
+                    chain++;
+                    val /= 2;
+                    return Counting(val);
+                }
+                else
+                {
+                    chain++;
+                    val = val * 3 + 1;
+                    return Counting(val);
+                }
+            }
+        }
+        public static long Problem15(int grid)
+        {
+            long sumU = 1, sumD = 1, score = 0;
+            for (long i = 1; i < grid + 1; i++)
+            {
+                sumD *= i;
+            }
+            for (long i = grid + 1; i < (2 * grid) + 1; i++)
+            {
+                if (sumD % i == 0) sumD /= i;
+                else sumU *= i;
+            }
+            if(sumD != 0) score = sumU / sumD;
+            return score;
+        }
     }
 }

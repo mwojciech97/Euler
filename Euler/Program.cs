@@ -12,3 +12,5 @@
 //Console.WriteLine(Problem11(4));
 //Console.WriteLine(Problem12(500));
 //Console.WriteLine(Problem13(10));
+//Console.WriteLine(Problem14(1000000));
+//Console.WriteLine(Problem15(20)); //max value is 20 as long is too small
