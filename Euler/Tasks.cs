@@ -332,5 +332,68 @@ namespace Euler
             if(sumD != 0) score = sumU / sumD;
             return score;
         }
+        public static BigInteger Problem16(int pow)
+        {
+            BigInteger sum = 2, digitsSum = 0;
+            for (int i = 2; i < pow + 1; i++)
+            {
+                sum *= 2;
+            }
+            char[] digits = sum.ToString().ToCharArray();
+            int[] ints = digits.Select(i => Int32.Parse(i.ToString())).ToArray();
+            foreach (int i in ints)
+            {
+                digitsSum += i;
+            }
+            return digitsSum;
+        }
+        public static int Problem17(int val)
+        {
+            int sum = 0;
+            Dictionary<int, int> numbers = new Dictionary<int, int>() {
+                { 1, 3 }, { 2, 3 }, { 3, 5 }, { 4, 4 }, { 5, 4 }, { 6, 3 }, { 7, 5 }, { 8, 5 }, { 9, 4 },
+                { 10, 3 }, { 11, 6 }, { 12, 6 }, { 13, 8 }, { 14, 8 }, { 15, 7 },
+                { 16, 7 }, { 17, 9 }, { 18, 8 }, { 19, 8}, { 20, 6 }, { 30, 6 }, { 40, 5 },
+                { 50, 5 }, { 60, 5 }, { 70, 7 }, { 80, 6 }, { 90, 6 }
+            };
+            for (int i = 1; i < val + 1; i++)
+            {
+                if (numbers.ContainsKey(i)) sum += numbers.First(x => x.Key.Equals(i)).Value;
+                else if (i < 100)
+                {
+                    AddToSum(RoundTens(i), i - RoundTens(i));
+                }
+                else if (i < 1000)
+                {
+                    int temp1 = i / 100;
+                    sum += numbers.First(x => x.Key.Equals(temp1)).Value + 7;
+                    if (i % (temp1 * 100) != 0)
+                    {
+                        int temp2 = i - (temp1 * 100);
+                        if (!numbers.ContainsKey(temp2))
+                        {
+                            AddToSum(RoundTens(temp2), temp2 - RoundTens(temp2));
+                            sum += 3;
+                            continue;
+                        }
+                        sum += numbers.First(x => x.Key.Equals(temp2)).Value + 3;
+                        continue;
+                    }
+                    else continue;
+                }
+                else if (i == 1000)
+                {
+                    sum += 11;
+                    break;
+                }
+            }
+            return sum;
+            void AddToSum(int number1, int number2)
+            {
+                sum += numbers.First(x => x.Key.Equals(number1)).Value;
+                sum += numbers.First(x => x.Key.Equals(number2)).Value;
+            }
+            int RoundTens(int number) { return number / 10 * 10; }
+        }
     }
 }
