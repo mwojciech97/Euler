@@ -15,5 +15,13 @@
 //Console.WriteLine(Problem14(1000000));
 //Console.WriteLine(Problem15(20)); //max value is 20 as long is too small
 //Console.WriteLine(Problem16(1000));
-Console.WriteLine(Problem17(1000)); //max value is 1000
+//Console.WriteLine(Problem17(1000)); //max value is 1000
+//Console.WriteLine(Problem18and67("C:\\Repos\\Euler\\Euler\\Euler\\Problem18.txt"));
+//Console.WriteLine(Problem19(1,1,1900,1901,2000));
+//Console.WriteLine(Problem20(100));
+//Console.WriteLine(Problem21(10000));
+//Console.WriteLine(Problem22("C:\\Repos\\Euler\\Euler\\Euler\\Problem22.txt"));
+//Console.WriteLine(Problem23(28123));
+//Console.WriteLine(Problem25(1000));
+Console.WriteLine(Problem26(5));
 

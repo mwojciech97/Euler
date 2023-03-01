@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Numerics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Euler
 {
@@ -394,6 +395,206 @@ namespace Euler
                 sum += numbers.First(x => x.Key.Equals(number2)).Value;
             }
             int RoundTens(int number) { return number / 10 * 10; }
+        }
+        public static int Problem18and67(string path)
+        {
+            string[][] test = File.ReadLines(path).Select(x => x.Split(' ')).ToArray();
+            int[][] numbers = new int[test.Length][];
+            numbers = test.Select(x => x.Select(y => int.Parse(y)).ToArray()).ToArray();
+            for (int i = numbers.Length - 2; i >= 0; i--)
+            {
+                for (int j = 0; j < numbers[i].Length; j++)
+                {
+                    if (numbers[i + 1][j] > numbers[i + 1][j + 1]) numbers[i][j] += numbers[i + 1][j];
+                    else numbers[i][j] += numbers[i + 1][j + 1];
+                }
+            }
+            return numbers[0][0];
+        }
+        public static int Problem19(int dayOfYear, int dayOfWeek, int year, int startYear, int endYear)
+        {
+            int currentMonth = 1, currentDay = dayOfYear, counter = 0, currentYear = year;
+            if (currentDay != 7)
+            {
+                currentDay += 7 - dayOfWeek;
+                dayOfWeek = 7;
+            }
+            while(currentYear < endYear + 1)
+            {
+                switch (currentMonth)
+                {
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 10:
+                        if (currentDay > 31) 
+                        {
+                            currentDay -= 31;
+                            currentMonth += 1;
+                            if(currentDay == 1 && currentYear >= startYear) counter++;
+                        }
+                        break;
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 11:
+                        if (currentDay > 30)
+                        {
+                            currentDay -= 30;
+                            currentMonth += 1;
+                            if (currentDay == 1 && currentYear >= startYear) counter++;
+                        }
+                        break;
+                    case 2:
+                        if ((currentYear % 4 == 0 && currentYear % 100 != 0) || (currentYear % 4 == 0 && currentYear % 400 == 0))
+                        {
+                            if (currentDay > 29)
+                            {
+                                currentDay -= 29;
+                                currentMonth += 1;
+                                if (currentDay == 1 && currentYear >= startYear) counter++;
+                                break;
+                            }
+                            break;
+                        }
+                        if (currentDay > 28)
+                        {
+                            currentDay -= 28;
+                            currentMonth += 1;
+                            if (currentDay == 1 && currentYear >= startYear) counter++;
+                        }
+                        break;
+                    case 12:
+                        if (currentDay > 31)
+                        {
+                            currentDay -= 31;
+                            currentMonth = 1;
+                            currentYear++;
+                            if (currentDay == 1 && currentYear >= startYear && currentYear < endYear + 1) counter++;
+                        }
+                        break;
+                }
+                currentDay += 7;
+            }
+            return counter;
+        }
+        public static int Problem20(int endNumber)
+        {
+            BigInteger val = 1;
+            int sum = 0;
+            for (int i = 2; i < endNumber + 1; i++)
+            {
+                val *= i;
+            }
+            char[] digits = val.ToString().ToCharArray();
+            digits.ToList().ForEach(i => sum += int.Parse(i.ToString()));
+            return sum;
+        }
+        public static int Problem21(int endNumber)
+        {
+            int sum = 0;
+            List<int> numbers = new List<int>();
+            List<int> amicableNumbers = new List<int>();
+            numbers = Enumerable.Range(1, endNumber).ToList();
+            foreach (int numb in numbers)
+            {
+                int sumA = 0, sumB = 0;
+                if (amicableNumbers.Contains(numb)) continue;
+                for (int i = 1; i < numb / 2 + 1; i++)
+                {
+                    if (numb % i == 0) sumA += i;
+                }
+                for (int i = 1; i < sumA / 2 + 1; i++)
+                {
+                    if (sumA % i == 0) sumB += i;
+                }
+                if(sumB == numb && numb != sumA)
+                {
+                    amicableNumbers.Add(numb);
+                    amicableNumbers.Add(sumA);
+                }
+            }
+            amicableNumbers.ForEach(i => sum += i);
+            return sum;
+        }
+        public static long Problem22(string path)
+        {
+            string content = "";
+            int position = 0;
+            long sum = 0;
+            List<string> names = new List<string>();
+            Dictionary<char, int> values= new Dictionary<char, int>()
+            {
+                { 'A', 1 }, { 'B', 2 }, { 'C', 3 }, { 'D', 4 }, { 'E', 5 }, { 'F', 6 }, { 'G', 7 },
+                { 'H', 8 }, { 'I', 9 }, { 'J', 10 }, { 'K', 11 }, { 'L', 12 }, { 'M', 13 }, { 'N', 14 },
+                { 'O', 15 }, { 'P', 16 }, { 'Q', 17 }, { 'R', 18 }, { 'S', 19 }, { 'T', 20 }, { 'U', 21 },
+                { 'V', 22 }, { 'W', 23 }, { 'X', 24 }, { 'Y', 25 }, { 'Z', 26 }
+            };
+            if (File.Exists(path)) content = File.ReadAllText(path).Replace("\"", "");
+            else Console.WriteLine("File does not exist");
+            names = content.Split(",").ToList();
+            names.Sort();
+            foreach (string name in names)
+            {
+                position++;
+                int value = 0;
+                char[] chars = name.ToCharArray();
+                foreach (char c in chars)
+                {
+                    if (values.ContainsKey(c))
+                    {
+                        value += values.First(v => v.Key.Equals(c)).Value;
+                    }
+                }
+                sum += value * position;
+            }
+            return sum;
+        }
+        public static int Problem23(int maxNumber)
+        {
+            int score = 0, cPosition = 0, sum;
+            List<int> numbers = new List<int>();
+            List<int> abundantNumbers = new List<int>();
+            numbers = Enumerable.Range(1, maxNumber).ToList();
+            foreach (int numb in numbers)
+            {
+                sum = 0;
+                for (int i = 1; i < numb / 2 + 1; i++)
+                {
+                    if (numb % i == 0) sum += i;
+                }
+                if(sum > numb) abundantNumbers.Add(numb);
+            }
+            foreach (int anumb1 in abundantNumbers)
+            {
+                for (int i = cPosition; i < abundantNumbers.Count; i++)
+                {
+                    if (numbers.Contains(anumb1 + abundantNumbers[i])) numbers.Remove(anumb1 + abundantNumbers[i]);
+                }
+                cPosition++;
+            }
+            numbers.ForEach(i => score += i);
+            return score;
+        }
+        public static int Problem25(int digits)
+        {
+            int index = 0, count = 0;
+            List<BigInteger> fib = new List<BigInteger>();
+            fib.Add(1);
+            fib.Add(1);
+            while (count < digits)
+            {
+                index = fib.Count();
+                fib.Add(fib[index - 1] + fib[index - 2]);
+                count = fib[fib.Count - 1].ToString().ToCharArray().Length;
+            }
+            return index + 1;
+        }
+        public static float Problem26(int digits)
+        {
+            return 1f / 7f;
         }
     }
 }
