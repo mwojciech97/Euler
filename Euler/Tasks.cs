@@ -578,6 +578,82 @@ namespace Euler
             numbers.ForEach(i => score += i);
             return score;
         }
+        /// <summary>
+        /// Created before I knew any mathematical concepts about permutations
+        /// </summary>
+        /// <param name="digits"></param>
+        /// <param name="placement"></param>
+        /// <returns></returns>
+        public static string Problem24(int digits, int placement)
+        {
+            List<string> numbers = new List<string>();
+            numbers.Add("0");
+            string temp = "";
+            int currentNumber = 0;
+            while (numbers[currentNumber].Length < digits + 1)
+            {
+                for (int i = 0; i < numbers[currentNumber].Length + 1; i++)
+                {
+                    temp = numbers[currentNumber].Insert(i, numbers[currentNumber].Length.ToString());
+                    numbers.Add(temp);
+                }
+                currentNumber++;
+            }
+            numbers = numbers.FindAll(x => x.Length.Equals(digits));
+            numbers.Sort();
+            return numbers[placement - 1];
+            
+        }
+        /// <summary>
+        /// Created after I learned factoradic representation
+        /// </summary>
+        /// <param name="digits"></param>
+        /// <param name="placement"></param>
+        /// <returns></returns>
+        public static string Problem24a(int digits, int placement)
+        {
+            List<int> factorialNumbers = new List<int>();
+            placement = placement - 1;
+            string firstNumber = "";
+            string answer = "";
+            FirstNumber();
+            int digitFactorial;
+            for(int j = digits - 1; j > 0; j--)
+            {
+                Factorial(j);
+                for (int i = 0; i < digits; i++)
+                {
+                   // if (placement < 0) break;
+                    if (digitFactorial * i > placement)
+                    {
+                        factorialNumbers.Add(i - 1);
+                        placement = placement - (digitFactorial * (i - 1));
+                        break;
+                    }
+                }
+            }
+            for(int i = 0; i < factorialNumbers.Count(); i++)
+            {
+                answer += firstNumber.ElementAt(factorialNumbers[i]);
+                firstNumber = firstNumber.Remove(factorialNumbers[i], 1);
+            }
+            answer += firstNumber.ElementAt(0);
+            return answer;
+            void FirstNumber()
+            {
+                for (int i = 0; i < digits; i++)
+                    firstNumber += i.ToString();
+            }
+            void Factorial(int x)
+            {
+                int a = 1;
+                for(int i = 1; i < x + 1; i++)
+                {
+                    a *= i;
+                }
+                digitFactorial = a;
+            }
+        }
         public static int Problem25(int digits)
         {
             int index = 0, count = 0;
