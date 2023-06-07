@@ -23,7 +23,7 @@
 //Console.WriteLine(Problem22("C:\\Repos\\Euler\\Euler\\Euler\\Problem22.txt"));
 //Console.WriteLine(Problem23(28123));
 //Console.WriteLine(Problem24(10, 1000000));
-Console.WriteLine(Problem24a(10, 1000000));
+//Console.WriteLine(Problem24a(10, 1000000));
 //Console.WriteLine(Problem25(1000));
-//Console.WriteLine(Problem26(5));
+Console.WriteLine(Problem26(1000));
 

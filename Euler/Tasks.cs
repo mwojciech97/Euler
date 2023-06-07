@@ -668,9 +668,34 @@ namespace Euler
             }
             return index + 1;
         }
-        public static float Problem26(int digits)
+        public static int Problem26(int digits)
         {
-            return 1f / 7f;
+            List<int> dividers = new List<int>();
+            Dictionary<int,int> answer = new Dictionary<int,int>();
+            int restFromDivison;
+            for (int i = 2; i < digits + 1; i++)
+            {
+                restFromDivison = 1 % i;
+                dividers.Add(restFromDivison * 10);
+                while (true)
+                {
+                    restFromDivison *= 10;
+                    restFromDivison = restFromDivison % i;
+                    if (restFromDivison == 0) break;
+                    if (!dividers.Contains(restFromDivison * 10))
+                    {
+                        dividers.Add(restFromDivison * 10);
+                        continue;
+                    }
+                    else
+                    {
+                        answer.Add(i, dividers.Count());
+                        break;
+                    }
+                }
+                dividers.Clear();
+            }
+            return answer.Where(x => x.Value == answer.Max(y => y.Value)).Select(x => x.Key).First();
         }
     }
 }
