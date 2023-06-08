@@ -697,5 +697,41 @@ namespace Euler
             }
             return answer.Where(x => x.Value == answer.Max(y => y.Value)).Select(x => x.Key).First();
         }
+        public static string Problem27(int a, int b)
+        {
+            int coA = a * (-1) - 1, coB = b * (-1) - 1, coN = 0, n, score;
+            bool isPrime;
+            for(int i = a * (-1); i < a; i++)
+            {
+                for(int j = b * (-1); j < b + 1; j++)
+                {
+                    n = 0;
+                    while (true)
+                    {
+                        isPrime = true;
+                        score = n * n + i * n + j;
+                        if (score < 0) break;
+                        for(int d = 2; d < Math.Sqrt(score) + 1; d++)
+                        {
+                            if (score % d == 0)
+                            {
+                                isPrime = false;
+                                break;
+                            }
+                        }
+                        if(!isPrime)
+                            break;
+                        n++;
+                    }
+                    if(n > coN)
+                    {
+                        coA = i;
+                        coB = j;
+                        coN = n;
+                    }
+                }
+            }
+            return "A: " + coA + ". B: " + coB + ". Number of primes: " + coN + ". Answer: " + coA * coB;
+        }
     }
 }

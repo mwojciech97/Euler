@@ -25,5 +25,6 @@
 //Console.WriteLine(Problem24(10, 1000000));
 //Console.WriteLine(Problem24a(10, 1000000));
 //Console.WriteLine(Problem25(1000));
-Console.WriteLine(Problem26(1000));
+//Console.WriteLine(Problem26(1000));
+Console.WriteLine(Problem27(1000, 1001));
 
