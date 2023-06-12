@@ -733,5 +733,36 @@ namespace Euler
             }
             return "A: " + coA + ". B: " + coB + ". Number of primes: " + coN + ". Answer: " + coA * coB;
         }
+        public static long Problem28(int dim)
+        {
+            int numb = 1, diagonal = 2, counter = 0;
+            long score = 0;
+            while (numb <= dim * dim)
+            {
+                if (counter % 4 == 0 && counter != 0)
+                {
+                    diagonal += 2;
+                    counter = 0;
+                }
+                score += numb;
+                numb += diagonal;
+                counter++;
+            }
+            return score;
+        }
+        public static int Problem29(double a, double b)
+        {
+            List<double> distinctNumbers = new List<double>();
+            for(double i = 2; i < a + 1; i++)
+            {
+                for(double j = 2; j < b + 1; j++)
+                {
+                    double score = Math.Pow(i, j);
+                    if (!distinctNumbers.Contains(score)) distinctNumbers.Add(score);
+                    else continue;
+                }
+            }
+            return distinctNumbers.Count();
+        }
     }
 }
