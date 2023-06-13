@@ -764,5 +764,32 @@ namespace Euler
             }
             return distinctNumbers.Count();
         }
+        public static double Problem30(int pow)
+        {
+            double power = Math.Pow(9, pow);
+            double maxNumber = 0;
+            int counter = 2;
+            double charScore, score = 0;
+            char[] chars;
+            while (maxNumber.ToString().Length != counter)
+            {
+                maxNumber = power * counter;
+                counter++;
+            }
+            for (int i = 10; i < maxNumber + 1; i++)
+            {
+                chars = i.ToString().ToCharArray();
+                Array.Sort(chars);
+                charScore = 0;
+                for(int j = chars.Length - 1; j > -1; j--)
+                {
+                    if (chars[j] == '0') break;
+                    if (charScore > i) break;
+                    charScore += Math.Pow(int.Parse(chars[j].ToString()), pow);
+                }
+                if (charScore == i) score += i;
+            }
+            return score;
+        }
     }
 }

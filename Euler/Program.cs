@@ -29,4 +29,5 @@
 //Console.WriteLine(Problem27(1000, 1001));
 //Console.WriteLine(Problem28(1001));
 //Console.WriteLine(Problem29(100, 100));
+//Console.WriteLine(Problem30(5));
 
