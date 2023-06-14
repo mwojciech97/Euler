@@ -791,5 +791,29 @@ namespace Euler
             }
             return score;
         }
+        public static int Problem31(int amount)
+        {
+            int[] coins = { 1, 2, 5, 10, 20, 50, 100, 200 };
+            int[,] table = new int[coins.Length, amount + 1];
+            for(int i = 0; i < amount + 1; i++)
+            {
+                table[0,i] = 1;
+            }
+            for(int y = 0; y < amount + 1; y++)
+            {
+                for(int x = 1; x < coins.Length; x++)
+                {
+                    table[x, y] = 0;
+                    if (y >= coins[x])
+                    {
+                        table[x, y] += table[x - 1, y];
+                        table[x, y] += table[x, y - coins[x]];
+                    }
+                    else table[x, y] = table[x - 1, y];
+                }
+            }
+            int result = table[coins.Length - 1, amount];
+            return result;
+        }
     }
 }
